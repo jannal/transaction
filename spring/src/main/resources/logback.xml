@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false" scanPeriod="1000 seconds">
+	<timestamp key="date" datePattern="yyyyMMdd"/>
+
+	<appender name="log-consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %level %c:%L - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	<logger name="org.springframework" level="DEBUG"/>
+	<logger name="org.apache" level="info"/>
+	<logger name="org.slf4j" level="info"/>
+	<logger name="ch.qos.logback.classic" level="ERROR"/>
+
+	<root level="DEBUG">
+		<appender-ref ref="log-consoleAppender"/>
+	</root>
+</configuration>

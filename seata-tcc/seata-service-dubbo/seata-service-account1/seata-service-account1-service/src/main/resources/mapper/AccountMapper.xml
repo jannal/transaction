@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--@formatter:off-->
+<mapper namespace="org.jannal.account1.core.account.dao.mapper.AccountMapper">
+
+	
+	 <!--  -->
+    <resultMap id="accountBaseMap" type="org.jannal.account1.core.account.entity.Account">
+         <!-- 主键 -->
+        <result property="id" column="id"/>
+         <!-- 账户标识 -->
+        <result property="accountId" column="account_id"/>
+         <!-- 金额 -->
+        <result property="amount" column="amount"/>
+         <!-- 冻结金额 -->
+        <result property="freezedAmount" column="freezed_amount"/>
+         <!-- 创建时间 -->
+        <result property="createTime" column="create_time"/>
+         <!-- 更新时间 -->
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="accountColumns">
+	    <![CDATA[
+         t.`id` , t.`account_id` , t.`amount` , t.`freezed_amount` , t.`create_time` , t.`update_time` 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterType="org.jannal.account1.core.account.entity.Account" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO t_account (
+        	`account_id` ,
+        	`amount` ,
+        	`freezed_amount` ,
+        	`create_time` ,
+        	`update_time` 
+        ) VALUES (
+        	#{accountId} ,
+        	#{amount} ,
+        	#{freezedAmount} ,
+        	#{createTime} ,
+        	#{updateTime} 
+        )
+    ]]>
+	</insert>
+
+	<insert id="insertSelective" parameterType="org.jannal.account1.core.account.entity.Account" useGeneratedKeys="true" keyProperty="id">
+			INSERT INTO t_account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="accountId!=null and accountId!=''">
+						`account_id`  ,
+					</if>
+					<if test="amount!=null ">
+						`amount`  ,
+					</if>
+					<if test="freezedAmount!=null ">
+						`freezed_amount`  ,
+					</if>
+					<if test="createTime!=null ">
+						`create_time`  ,
+					</if>
+					<if test="updateTime!=null ">
+						`update_time`  
+					</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+					<if test="accountId!=null and accountId!=''">
+						#{accountId} ,
+					</if>
+					<if test="amount!=null ">
+						 #{amount} ,
+					</if>
+					<if test="freezedAmount!=null ">
+						 #{freezedAmount} ,
+					</if>
+					<if test="createTime!=null ">
+						 #{createTime} ,
+					</if>
+					<if test="updateTime!=null ">
+						 #{updateTime} 
+					</if>
+		</trim>
+	</insert>
+
+	<insert id="insertBatch"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_account (
+        	`id` ,
+        	`account_id` ,
+        	`amount` ,
+        	`freezed_amount` ,
+        	`create_time` ,
+        	`update_time` 
+        )VALUES
+        <foreach item="item" index="index" collection="list" separator="," >
+        (
+        	#{item.id} ,
+        	#{item.accountId} ,
+        	#{item.amount} ,
+        	#{item.freezedAmount} ,
+        	#{item.createTime} ,
+        	#{item.updateTime} 
+        )
+        </foreach>
+    </insert>
+	<!--更新  -->
+    <update id="update" parameterType="org.jannal.account1.core.account.entity.Account">
+        UPDATE t_account t
+        <set>
+					<if test="accountId!=null and accountId!=''">
+                        t.`account_id` = #{accountId} ,
+					</if>
+					<if test="amount!=null ">
+                        t.`amount` = #{amount} ,
+					</if>
+					<if test="freezedAmount!=null ">
+                        t.`freezed_amount` = #{freezedAmount} ,
+					</if>
+					<if test="createTime!=null ">
+						t.`create_time` = #{createTime} ,
+					</if>
+
+					<if test="updateTime!=null ">
+						t.`update_time` = #{updateTime} 
+					</if>
+
+		</set>
+        WHERE 
+            t.`id` = #{ id} 
+    </update>
+	<!--删除  -->
+    <delete id="delete" >
+        DELETE t FROM t_account t WHERE t.id =#{id}
+    </delete>
+    
+     <!-- 删除多个-->
+    <delete id="deletes" >
+		  DELETE t FROM t_account t WHERE t.id in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+	 	  #{item}
+		</foreach>
+	</delete>
+    
+    <!-- 分页查询 -->
+   <select id="findListByPage" parameterType="java.util.Map" resultMap="accountBaseMap">
+		select 
+    	 <include refid="accountColumns"/>
+    	from  t_account t
+		<where>
+				<if test="accountId!=null and accountId!=''">
+                    and t.`account_id` = #{accountId}
+				</if>
+				<if test="amount!=null ">
+                    and t.`amount` = #{amount}
+				</if>
+				<if test="freezedAmount!=null ">
+                    and t.`freezed_amount` = #{freezedAmount}
+				</if>
+				<if test="createTime!=null ">
+                    and t.`create_time` = #{createTime}
+				</if>
+				<if test="updateTime!=null ">
+                    and t.`update_time` = #{updateTime}
+				</if>
+		</where>
+	</select>
+	<!-- 通过id查询 -->
+	<select id="findById" resultMap="accountBaseMap">
+		select  <include refid="accountColumns"/>  from t_account  t where t.id=#{id};
+	</select>
+    <select id="findByAmountIdForUpdate" resultMap="accountBaseMap">
+		select  <include refid="accountColumns"/>  from t_account  t where t.account_id=#{accountId};
+	</select>
+	
+</mapper>
+

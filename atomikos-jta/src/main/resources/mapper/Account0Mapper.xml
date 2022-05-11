@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--@formatter:off-->
+<mapper namespace="org.jannal.jta.core.ds0.mapper.Account0Mapper">
+    <resultMap id="accountBaseMap" type="org.jannal.jta.core.entity.Account">
+         <!-- 主键 -->
+        <result property="id" column="id"/>
+         <!-- 账户标识 -->
+        <result property="accountId" column="account_id"/>
+         <!-- 金额 -->
+        <result property="amount" column="amount"/>
+         <!-- 冻结金额 -->
+        <result property="freezedAmount" column="freezed_amount"/>
+         <!-- 创建时间 -->
+        <result property="createTime" column="create_time"/>
+         <!-- 更新时间 -->
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="accountColumns">
+	    <![CDATA[
+         t.`id` , t.`account_id` , t.`amount` , t.`freezed_amount` , t.`create_time` , t.`update_time` 
+	    ]]>
+	</sql>
+	
+
+
+	<!--更新  -->
+    <update id="update" parameterType="org.jannal.jta.core.entity.Account">
+        UPDATE t_account t
+        <set>
+					<if test="accountId!=null and accountId!=''">
+                        t.`account_id` = #{accountId} ,
+					</if>
+					<if test="amount!=null ">
+                        t.`amount` = #{amount} ,
+					</if>
+					<if test="freezedAmount!=null ">
+                        t.`freezed_amount` = #{freezedAmount} ,
+					</if>
+					<if test="updateTime!=null ">
+						t.`update_time` = #{updateTime} 
+					</if>
+
+		</set>
+        WHERE 
+            t.`id` = #{ id} 
+    </update>
+
+
+    <select id="findByAccountId" resultMap="accountBaseMap">
+		select  <include refid="accountColumns"/>  from t_account  t where t.account_id=#{accountId};
+	</select>
+    <select id="findByAmountIdForUpdate" resultMap="accountBaseMap">
+		select  <include refid="accountColumns"/>  from t_account  t where t.account_id=#{accountId} for update;
+	</select>
+	
+</mapper>
+

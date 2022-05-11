@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- 配置事务增强，通过事务通知的方式实现事务 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 事务管理属性配置，配置哪些方法要使用什么样的事务配置，没有匹配到的方法不会为其管理事务 -->
+		<tx:attributes>
+			<!-- 可选属性配置
+			  name:方法名称，将匹配的方法注入事务管理，可用通配符
+			  propagation:事务传播行为
+			  isolation:事务隔离级别，默认为DEFAULT
+			  read-only:是否只读，默认为 false，表示不是只读
+			  timeout:事务超时时间，单位为秒，默认 -1，表示事务超时将依赖于底层事务系统
+			  rollback-for:需要触发回滚的异常定义，多个以逗号","分割，默认任何 RuntimeException 都将导致事务回滚，而任何 Checked Exception 将不导致事务回滚
+			  no-rollback-for:不被触发进行回滚的 Exception(s)。多个以逗号","分割
+			 -->
+			<!-- 设置进行事务操作的方法匹配规则 -->
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="transferThrow*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="transferNoException" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 切面配置 -->
+	<aop:config>
+		<!-- 切入点配置: cn.jannal.tx.declarative.tx.account.service 包-->
+		<aop:pointcut expression="execution(* cn.jannal.tx.declarative.txadvice.*.service..*(..))" id="txPonitcut"/>
+		<!-- 通知与切入点关联 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPonitcut"/>
+	</aop:config>
+</beans>

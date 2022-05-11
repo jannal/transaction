@@ -1,0 +1,5 @@
+dependencies {
+    compile project(":seata-tcc:seata-service-dubbo:seata-service-common")
+    compile project(":seata-tcc:seata-service-dubbo:seata-service-account0:seata-service-account0-service")
+    compile project(":seata-tcc:seata-service-dubbo:seata-service-account1:seata-service-account1-service")
+}

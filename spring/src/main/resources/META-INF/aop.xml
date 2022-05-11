@@ -1,0 +1,15 @@
+<!--
+<aspectj>
+	<weaver options="-showWeaveInfo -Xlint:ignore" ></weaver>
+</aspectj>
+-->
+
+<aspectj>
+	<aspects>
+		<aspect name="org.springframework.transaction.aspectj.AnnotationTransactionAspect"/>
+		<aspect name="org.springframework.transaction.aspectj.JtaAnnotationTransactionAspect"/>
+	</aspects>
+	<weaver options="-showWeaveInfo -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">
+		<include within="cn.jannal.tx.declarative.annotation.account.service.*"/>
+	</weaver>
+</aspectj>

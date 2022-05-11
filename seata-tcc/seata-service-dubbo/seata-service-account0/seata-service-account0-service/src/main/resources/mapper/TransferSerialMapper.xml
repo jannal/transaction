@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--@formatter:off-->
+<mapper namespace="org.jannal.account0.core.user.dao.mapper.TransferSerialMapper">
+
+	
+	 <!--  -->
+    <resultMap id="transferSerialBaseMap" type="org.jannal.account0.core.user.entity.TransferSerial">
+         <!-- 主键 -->
+        <result property="id" column="id"/>
+         <!-- 转账流水号 -->
+        <result property="transferSerialNumber" column="transfer_serial_number"/>
+         <!-- 转账账户 -->
+        <result property="accountFromId" column="account_from_id"/>
+         <!-- 进账账户 -->
+        <result property="accountToId" column="account_to_id"/>
+        <!-- 金额 -->
+        <result property="amount" column="amount"/>
+         <!-- 状态，1预扣款，2扣款，3废弃 -->
+        <result property="status" column="status"/>
+         <!-- 创建时间 -->
+        <result property="createTime" column="create_time"/>
+         <!-- 更新时间 -->
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="transferSerialColumns">
+	    <![CDATA[
+         t.`id` , t.`transfer_serial_number` , t.`account_from_id` , t.`account_to_id` ,t.`amount`,t.`status` , t.`create_time` , t.`update_time`
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterType="org.jannal.account0.core.user.entity.TransferSerial" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO t_transfer_serial (
+        	`transfer_serial_number` ,
+        	`account_from_id` ,
+        	`account_to_id` ,
+        	`amount` ,
+        	`status` ,
+        	`create_time` ,
+        	`update_time` 
+        ) VALUES (
+        	#{transferSerialNumber} ,
+        	#{accountFromId} ,
+        	#{accountToId} ,
+        	#{amount} ,
+        	#{status} ,
+        	#{createTime} ,
+        	#{updateTime} 
+        )
+    ]]>
+	</insert>
+	<!--更新  -->
+    <update id="update" parameterType="org.jannal.account0.core.user.entity.TransferSerial">
+        UPDATE t_transfer_serial t
+        <set>
+					<if test="transferSerialNumber!=null ">
+                        t.`transfer_serial_number` = #{transferSerialNumber} ,
+					</if>
+					<if test="accountFromId!=null and accountFromId!=''">
+                        t.`account_from_id` = #{accountFromId} ,
+					</if>
+					<if test="accountToId!=null and accountToId!=''">
+                        t.`account_to_id` = #{accountToId} ,
+					</if>
+                    <if test="amount!=null ">
+                        t.`amount` = #{amount} ,
+                    </if>
+					<if test="status!=null ">
+                        t.`status` = #{status} ,
+					</if>
+					<if test="updateTime!=null ">
+						t.`update_time` = #{updateTime} 
+					</if>
+
+		</set>
+        WHERE 
+            t.`id` = #{ id} 
+    </update>
+    <select id="findBySerialNumberForUpdate" resultMap="transferSerialBaseMap">
+        select  <include refid="transferSerialColumns"/>  from t_transfer_serial  t where t.transfer_serial_number=#{transferSerialNumber} for update
+    </select>
+    <select id="findBySerialNumber" resultMap="transferSerialBaseMap">
+        select  <include refid="transferSerialColumns"/>  from t_transfer_serial  t where t.transfer_serial_number=#{transferSerialNumber}
+    </select>
+
+</mapper>
+

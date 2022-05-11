@@ -1,0 +1,41 @@
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/gradle-plugin'
+        }
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/repositories/gradle-plugin'
+        }
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'transaction'
+include 'seata-at'
+include 'seata-at:seata-service-dubbo'
+include 'seata-at:seata-service-dubbo:seata-service-account'
+include 'seata-at:seata-service-dubbo:seata-service-points'
+include 'seata-at:seata-service-dubbo:seata-service-aggregation'
+include 'seata-at:seata-service-dubbo:seata-service-common'
+include 'seata-at:seata-service-dubbo:seata-service-account:seata-service-account-api'
+include 'seata-at:seata-service-dubbo:seata-service-account:seata-service-account-service'
+include 'seata-at:seata-service-dubbo:seata-service-points:seata-service-points-api'
+include 'seata-at:seata-service-dubbo:seata-service-points:seata-service-points-service'
+include 'seata-tcc'
+include 'seata-tcc:seata-service-dubbo'
+include 'seata-tcc:seata-service-dubbo:seata-service-account0'
+include 'seata-tcc:seata-service-dubbo:seata-service-account1'
+include 'seata-tcc:seata-service-dubbo:seata-service-aggregation'
+include 'seata-tcc:seata-service-dubbo:seata-service-common'
+include 'seata-tcc:seata-service-dubbo:seata-service-account0:seata-service-account0-api'
+include 'seata-tcc:seata-service-dubbo:seata-service-account0:seata-service-account0-service'
+include 'seata-tcc:seata-service-dubbo:seata-service-account1:seata-service-account1-api'
+include 'seata-tcc:seata-service-dubbo:seata-service-account1:seata-service-account1-service'
+include 'seata-saga'
+include 'atomikos-jta'
+include 'lcn-3pc'
+include 'spring'
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--@formatter:off-->
+<mapper namespace="org.jannal.points.core.user.dao.mapper.PointsMapper">
+
+    <resultMap id="pointsBaseMap" type="org.jannal.points.core.user.entity.Points">
+         <!-- 主键 -->
+        <result property="id" column="id"/>
+         <!-- 用户唯一标识 -->
+        <result property="userId" column="user_id"/>
+         <!-- 积分 -->
+        <result property="num" column="num"/>
+         <!-- 创建时间 -->
+        <result property="createTime" column="create_time"/>
+         <!-- 更新时间 -->
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="pointsColumns">
+	    <![CDATA[
+         t.`id` , t.`user_id` , t.`num` , t.`create_time` , t.`update_time` 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterType="org.jannal.points.core.user.entity.Points" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO t_points (
+        	`user_id` ,
+        	`num` ,
+        	`create_time` ,
+        	`update_time` 
+        ) VALUES (
+        	#{userId} ,
+        	#{num} ,
+        	#{createTime} ,
+        	#{updateTime} 
+        )
+    ]]>
+	</insert>
+
+
+	<!--更新  -->
+    <update id="update" parameterType="org.jannal.points.core.user.entity.Points">
+        UPDATE t_points t
+        <set>
+					<if test="userId!=null and userId!=''">
+                        t.`user_id` = #{userId} ,
+					</if>
+					<if test="num!=null ">
+                        t.`num` = #{num} ,
+					</if>
+					<if test="createTime!=null ">
+						t.`create_time` = #{createTime} ,
+					</if>
+					<if test="updateTime!=null ">
+						t.`update_time` = #{updateTime} 
+					</if>
+
+		</set>
+        WHERE 
+            t.`id` = #{id}
+    </update>
+
+	<!-- 通过id查询 -->
+	<select id="findByUserId" resultMap="pointsBaseMap">
+		select  <include refid="pointsColumns"/>  from t_points  t where t.user_id=#{userId};
+	</select>
+	
+</mapper>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--@formatter:off-->
+<mapper namespace="org.jannal.account.core.user.dao.mapper.UserMapper">
+
+	
+	 <!--  -->
+    <resultMap id="userBaseMap" type="org.jannal.account.core.user.entity.User">
+         <!-- 主键 -->
+        <result property="id" column="id"/>
+         <!-- 用户唯一标识 -->
+        <result property="userId" column="user_id"/>
+         <!-- 用户名 -->
+        <result property="username" column="username"/>
+         <!-- 密码 -->
+        <result property="password" column="password"/>
+         <!-- 创建时间 -->
+        <result property="createTime" column="create_time"/>
+         <!-- 更新时间 -->
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="userColumns">
+	    <![CDATA[
+         t.`id` , t.`user_id` , t.`username` , t.`password` , t.`create_time` , t.`update_time` 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterType="org.jannal.account.core.user.entity.User" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO t_user (
+        	`user_id` ,
+        	`username` ,
+        	`password` ,
+        	`create_time` ,
+        	`update_time` 
+        ) VALUES (
+        	#{userId} ,
+        	#{username} ,
+        	#{password} ,
+        	#{createTime} ,
+        	#{updateTime} 
+        )
+    ]]>
+	</insert>
+
+	<!-- 通过id查询 -->
+	<select id="findByUsername" resultMap="userBaseMap">
+		select  <include refid="userColumns"/>  from t_user  t where t.username=#{username};
+	</select>
+	
+</mapper>
+

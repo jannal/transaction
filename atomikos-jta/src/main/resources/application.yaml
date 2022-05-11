@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    active: mysql
+  jta:
+    atomikos:
+      properties:
+        #===================事务日志(Transaction logs)记录配置===================
+        #事务日志目录，默认为./
+        log-base-dir: ./
+        # #事务日志文件前缀，默认为tmlog
+        log-base-name: tmlog
+        # 指定两次checkpoint的时间间隔，默认为500
+        checkpoint-interval: 500
+        #=================== 事务管理器(TM)配置参数 ==================
+        # 指定是否启动磁盘日志，默认为true。在生产环境下一定要保证为true，否则数据的完整性无法保证
+        enable-logging: true
+        # JTA事务的默认超时时间，默认为10000ms
+        default-jta-timeout: 10000
+        # 事务的最大超时时间，默认为300000ms,0表示不限制
+        max-timeout: 300000
+        # 指定在两阶段提交时，是否使用不同的线程(意味着并行)
+        threaded-two-phase-commit: true
+        # 指定最多可以同时运行的事务数量，默认值为50，负数表示没有数量限制
+        max-actives: 50
+        # 是否支持subtransaction，默认为true
+        allow-sub-transactions: true
+        # 指定在可能的情况下，否应该join 子事务(subtransactions)，默认值为true。如果设置为false，对于有关联的不同subtransactions，不会调用XAResource.start(TM_JOIN)
+        serial-jta-transactions: true
+        # 指定JVM关闭时是否强制(force)关闭事务管理器，默认为false
+        force-shutdown-on-vm-exit: false
+        # #在正常关闭(no-force)的情况下，应该等待事务执行完成的时间，默认为Long.MAX_VALUE
+        default-max-wait-time-on-shutdown: 9223372036854775807
+        #===================事务日志恢复(Recovery)配置==================
+        recovery:
+          # 指定在多长时间后可以清空无法恢复的事务日志(orphaned)，默认86400000ms
+          forget-orphaned-log-entries-delay: 86400000
+          # 指定两次恢复扫描之间的延迟时间。默认值为与default-jta-timeout相同
+          delay: 10000
+          # 提交失败时，再抛出一个异常之前，最多可以重试几次，默认值为5
+          max-retries: 5
+          # 提交失败时，每次重试的时间间隔，默认10000ms
+          retry-interval: 10000
+
+logging:
+  level:
+    root: info
+    com:
+      blankhang: debug
+      atomikos:
+        datasource:
+          xa:
+            # 事务日志级别
+            XAResourceTransaction: debug
