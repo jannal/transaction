@@ -16,6 +16,7 @@ dependencies {
     compile("org.springframework:spring-tx")
     compile("org.springframework:spring-jdbc")
     compile("org.springframework:spring-aspects")
+    compile("org.springframework:spring-test")
     // For use as javaagents
     //aopAgent group: 'org.springframework', name: 'spring-instrument', version: '5.2.12.RELEASE'
     //aopAgent group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.2'
