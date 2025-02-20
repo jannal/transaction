@@ -34,8 +34,8 @@
 	</tx:advice>
 	<!-- 切面配置 -->
 	<aop:config>
-		<!-- 切入点配置: cn.jannal.tx.declarative.tx.account.service 包-->
-		<aop:pointcut expression="execution(* cn.jannal.tx.declarative.txadvice.*.service..*(..))" id="txPonitcut"/>
+		<!-- 切入点配置: org.jannal.tx.declarative.tx.account.service 包-->
+		<aop:pointcut expression="execution(* org.jannal.tx.declarative.txadvice.*.service..*(..))" id="txPonitcut"/>
 		<!-- 通知与切入点关联 -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPonitcut"/>
 	</aop:config>

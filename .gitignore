@@ -18,6 +18,7 @@ out
 *.tgz
 *.log
 *.lock
+*/dist/*.jar
+**/.fastRequest/**
 rebel.xml
 rebel-remote.xml
-*.jar

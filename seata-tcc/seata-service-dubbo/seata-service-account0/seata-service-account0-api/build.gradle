@@ -1,3 +1,3 @@
 dependencies {
-    compile 'io.seata:seata-spring-boot-starter:1.4.2'
+    api 'io.seata:seata-spring-boot-starter:1.8.0'
 }

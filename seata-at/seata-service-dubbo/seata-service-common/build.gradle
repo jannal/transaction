@@ -1,27 +1,27 @@
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter')
-    compile('org.springframework.boot:spring-boot')
+    api('org.springframework.boot:spring-boot-starter-web')
+    api('org.springframework.boot:spring-boot-starter')
+    api('org.springframework.boot:spring-boot')
     //seata
-    compile 'io.seata:seata-spring-boot-starter:1.4.2'
+    api 'io.seata:seata-spring-boot-starter:1.8.0'
     //dubbo
-    compile('org.apache.dubbo:dubbo') {
+    api('org.apache.dubbo:dubbo') {
         exclude module: 'log4j'
         exclude group: 'javax.servlet'
         exclude group: 'org.springframework'
     }
-    compile("log4j:log4j:1.2.17")
-    compile 'com.alibaba.nacos:nacos-client:2.0.4'
-    compile("org.apache.dubbo:dubbo-registry-nacos") {
+    api("log4j:log4j:1.2.17")
+    api 'com.alibaba.nacos:nacos-client:2.0.4'
+    api("org.apache.dubbo:dubbo-registry-nacos") {
         exclude group: 'com.alibaba.nacos', module: 'nacos-client'
         exclude group: 'org.apache.dubbo', module: 'dubbo-common'
         exclude group: 'org.apache.dubbo', module: 'dubbo-cluster'
     }
-    compile("org.apache.dubbo:dubbo-spring-boot-starter")
-    compile('org.springframework:spring-context')
+    api("org.apache.dubbo:dubbo-spring-boot-starter")
+    api('org.springframework:spring-context')
 
     //common
-    compile 'org.apache.commons:commons-lang3'
+    api 'org.apache.commons:commons-lang3'
 
 
 }

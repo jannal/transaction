@@ -1,10 +1,10 @@
 dependencies {
-    compile project(":seata-tcc:seata-service-dubbo:seata-service-common")
-    compile project(":seata-tcc:seata-service-dubbo:seata-service-account1:seata-service-account1-api")
+    api project(":seata-tcc:seata-service-dubbo:seata-service-common")
+    api project(":seata-tcc:seata-service-dubbo:seata-service-account1:seata-service-account1-api")
     //mybatis
-    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1",
+    api "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.2",
             "org.mybatis:mybatis-typehandlers-jsr310:1.0.2",
             'org.springframework.boot:spring-boot-starter-aop',
-            'mysql:mysql-connector-java:5.1.46',
+            'mysql:mysql-connector-java:5.1.49',
             'p6spy:p6spy:3.9.0'
 }

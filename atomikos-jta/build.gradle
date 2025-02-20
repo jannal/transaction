@@ -1,12 +1,10 @@
 dependencies {
-//    implementation 'com.atomikos:transactions-jdbc:5.0.9'
-//    implementation 'javax.transaction:jta:1.1'
-    implementation 'org.springframework.boot:spring-boot-starter-jta-atomikos:2.6.7'
-    compileOnly('org.springframework.boot:spring-boot-configuration-processor:2.2.6.RELEASE')
-    testAnnotationProcessor('org.springframework.boot:spring-boot-configuration-processor:2.2.6.RELEASE')
+//    api 'com.atomikos:transactions-jdbc:5.0.9'
+//    api 'javax.transaction:jta:1.1'
+    api 'org.springframework.boot:spring-boot-starter-jta-atomikos:2.6.7'
     //mybatis
-    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1",
+    api "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.2",
             "org.mybatis:mybatis-typehandlers-jsr310:1.0.2",
             'org.springframework.boot:spring-boot-starter-aop',
-            'mysql:mysql-connector-java:5.1.46'
+            'mysql:mysql-connector-java:5.1.49'
 }
